@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Named Entity Recognition {% block title %}{% endblock %}</title>
+</head>
+<body>
+
+<style>
+
+    header {
+        width: 90%;
+        margin: 30px 5%;
+    }
+
+    .netflix-stick {
+        width: 1.4vh;
+        height: 6vh;
+        background-color: #b1060f;
+        position: relative;
+        display: inline-block;
+    }
+
+    .netflix-stick:before {
+        content: "";
+        position: absolute;
+        width: 1.4vh;
+        height: 6vh;
+        background-color: #e50913;
+        transform: skew(20deg);
+        left: 1.1vh;
+        box-shadow: 0 0 2.5vh -1vh black;
+    }
+
+    .netflix-stick:after {
+        content: "";
+        position: absolute;
+        width: 1.4vh;
+        height: 6vh;
+        background-color: #b1060f;
+        left: 2.2vh;
+        z-index: -1;
+    }
+
+    .thing {
+        width: 1.5vh;
+        height: 0.4vh;
+        position: absolute;
+        background-color: black;
+        bottom: -0.2vh;
+        transform: rotateZ(-5deg);
+    }
+
+    .thing:before {
+        content: "";
+        width: 1.56vh;
+        height: 0.4vh;
+        position: absolute;
+        background-color: black;
+        bottom: -0.2vh;
+        transform: rotateZ(12deg);
+        left: 2vh;
+    }
+
+    .rest-logo{
+        margin-left: 20px;
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 6vh;
+        background: linear-gradient(to right, #b1060f, #000);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    body{
+        margin:0;
+        padding: 0;
+    }
+</style>
+
+<header>
+    <div class="netflix-stick">
+        <div class="thing">
+        </div>
+    </div>
+    <span class="rest-logo">amed Entity Recognition</span>
+</header>
+
+{% block content %}
+{% endblock %}
+
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - caddy-net
+  web:
+    image: endemik-backend:v0
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: backend
+    volumes:
+      - .:/code
+    extra_hosts:
+      - "localhost:127.0.0.1"
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - caddy-net
+    depends_on:
+      - db
+
+
+networks:
+  caddy-net:
+    external: true

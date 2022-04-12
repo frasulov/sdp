@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}- Azerbaijan{% endblock %}
+
+{% block content %}
+
+    <style>
+
+
+    .first {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    section {
+        width: 100%;
+        padding: 30px 5%;
+        box-sizing: border-box;
+        background: #FCD96F;
+    }
+
+
+    .tags {
+        list-style: none;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+        text-align: center;
+    }
+
+    .tags li {
+        float: left;
+    }
+
+    .tag {
+        background: #eee;
+        border-radius: 3px 0 0 3px;
+        color: #999;
+        display: inline-block;
+        height: 26px;
+        line-height: 26px;
+        padding: 0 20px 0 23px;
+        position: relative;
+        margin: 0 10px 10px 0;
+        text-decoration: none;
+        -webkit-transition: color 0.2s;
+    }
+
+
+
+    .tag::before {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+        content: '';
+        height: 6px;
+        left: 10px;
+        position: absolute;
+        width: 6px;
+        top: 10px;
+    }
+
+    .tag::after {
+        background: #fff;
+        border-bottom: 13px solid transparent;
+        border-left: 10px solid #eee;
+        border-top: 13px solid transparent;
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .tag:hover {
+        background-color: crimson;
+        color: white;
+    }
+
+    .tag:hover::after {
+        border-left-color: crimson;
+    }
+
+    .first{
+        margin-top: 50px;
+    }
+
+    #in {
+        resize: none;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        border: none;
+    }
+
+    #in:focus {
+        outline: none;
+        border: 2px solid #b1060f;
+    }
+
+    .form {
+        width: 45%;
+        height: 150px;
+    }
+
+    .filters {
+        width: 45%;
+        display: flex;
+        justify-content: start;
+
+    }
+
+    </style>
+
+
+    <section class="first">
+
+        <div class="form">
+            <textarea id="in" placeholder="Type your text here..."></textarea>
+        </div>
+
+        <div class="filters">
+
+            <ul class="tags">
+                <li><a class="tag">PERSON</a></li>
+                <li><a class="tag">DATE</a></li>
+                <br>
+                <li><a class="tag">ORGANIZATION</a></li>
+                <br>
+                <li><a class="tag">LOCATION</a></li>
+            </ul>
+
+
+        </div>
+
+
+
+    </section>
+
+{% endblock %}
