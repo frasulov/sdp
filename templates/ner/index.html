@@ -12,14 +12,15 @@
         margin-top: 10px;
     }
 
-    section {
+    .first-section {
         color: #fff;
         width: 100%;
         padding: 30px 5%;
-        margin-top: 50px;
+        margin-top: 30px;
         box-sizing: border-box;
         background: #2d91e3;
     }
+
 
     #in {
         resize: none;
@@ -81,11 +82,45 @@
         color: black;
         margin-top: 10px;
         font-weight: 550;
+        margin-right: 5px;
+    }
+
+    .result-section{
+        color: #000;
+        width: 100%;
+        padding: 30px 20%;
+        line-height: 30px;
+        font-size: 16px;
+    }
+
+    mark {
+        padding: 0.3em 0.4em;
+        margin: 0 0.25em;
+        line-height: 1;
+        display: inline-block;
+        border-radius: 0.25em;
+        box-sizing: border-box;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+    mark::after {
+        box-sizing: border-box;
+        content: attr(data-tag);
+        font-size: 0.55em;
+        line-height: 1;
+        padding: 0.35em 0.35em;
+        border-radius: 0.35em;
+        text-transform: uppercase;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0 0.15rem 0.5rem;
+        background: #fff;
+        font-weight: bold;
     }
     </style>
 
 
-    <section>
+    <section class="first-section">
 
         <h2 class="n-header">Named Entity Recognition for Azerbaijani Language</h2>
         <div class="first">
@@ -112,34 +147,51 @@
 
             <div class="filters">
                 <h2 class="s-header">Entity labels <button id="toggle-filter" data-isselected="false">(select all)</button></h2>
-                <div class="d-block">
-
-                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#a99dfb">PERSON</button>
-                    <button class="tag ml-2" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#ef60b4">DATE</button>
-                    <br>
-                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#a6e22d">LOCATION</button>
-                    <br>
-                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#fc0">ORGANIZATION</button>
+                <div id="tags" class="d-block">
+{#                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#a99dfb">PERSON</button>#}
+{#                    <button class="tag ml-2" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#ef60b4">DATE</button>#}
+{#                    <br>#}
+{#                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#a6e22d">LOCATION</button>#}
+{#                    <br>#}
+{#                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#fc0">ORGANIZATION</button>#}
 
                 </div>
 
-{#                <ul class="tags">#}
-{#                    <li><a class="tag">PERSON</a></li>#}
-{#                    <li><a class="tag">DATE</a></li>#}
-{#                    <br>#}
-{#                    <li><a class="tag">ORGANIZATION</a></li>#}
-{#                    <br>#}
-{#                    <li><a class="tag">LOCATION</a></li>#}
-{#                </ul>#}
 
             </div>
         </div>
 
     </section>
 
+    <section class="result-section">
+        <mark data-tag="person">Lorem ipsum dolor</mark> sit amet, consectetur adipisicing elit.
+        <mark data-tag="organization">Dicta</mark> incidunt iure neque nesciunt <mark data-tag="date">perspiciatis</mark> qui quis reprehenderit velit! Aliquid beatae est porro saepe tempore temporibus! Explicabo illo nihil officiis ut.
+    </section>
     <script>
 
     document.addEventListener("DOMContentLoaded", () => {
+        var all_tags = {
+            "person": {
+                "bgsecondcolor": "#a99dfb",
+                "secondcolor": "#fff",
+            },
+            "date": {
+                "bgsecondcolor": "#ef60b4",
+                "secondcolor": "#fff",
+            },
+            "location": {
+                "bgsecondcolor": "#a6e22d",
+                "secondcolor": "#fff",
+            },
+            "organization": {
+                "bgsecondcolor": "#fc0",
+                "secondcolor": "#fff",
+            }
+        };
+        generateTags(all_tags);
+        updateMarkTags(all_tags);
+
+
         var tags = document.querySelectorAll('.tag');
         var toggle_filter = document.getElementById('toggle-filter');
         tags.forEach(tag => {
@@ -180,6 +232,35 @@
             }
         }
 
+        function generateTags(all_tags){
+            tags = document.getElementById('tags');
+            let result_len = 0;
+            let next_line = 8;
+            for (const [key, value] of Object.entries(all_tags)) {
+                let button = document.createElement('button');
+                button.classList.add('tag');
+                button.dataset.isselected = "false";
+                button.dataset.secondcolor = value["secondcolor"];
+                button.dataset.bgsecondcolor = value["bgsecondcolor"];
+                button.innerText = key.toUpperCase();
+                tags.append(button);
+                result_len += key.length;
+                if (result_len/next_line >= 1) {
+                    result_len = 0;
+                    tags.append(document.createElement('br'));
+                }
+            }
+
+        }
+
+        function updateMarkTags(all_tags){
+            let marks = document.querySelectorAll('mark');
+
+            marks.forEach(mark => {
+                let mark_tag = mark.dataset.tag;
+                mark.style.background = all_tags[mark_tag]["bgsecondcolor"];
+            })
+        }
 
     })
 
