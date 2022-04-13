@@ -11,8 +11,13 @@
 <style>
 
     header {
-        width: 90%;
-        margin: 30px 5%;
+        width: 100%;
+        padding: 15px 5% 5px 5%;
+        box-shadow: 0 0 10px;
+        box-sizing: border-box;
+        display: flex !important;
+        justify-content: space-between;
+        align-items: end;
     }
 
     .netflix-stick {
@@ -73,6 +78,22 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+    .header-item {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 6vh;
+        display: flex;
+        color: black;
+        text-decoration: none;
+        margin:0;
+        padding:0;
+
+    }
+    .header-item:hover {
+        background: linear-gradient(to right, #b1060f, #000);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
     body{
         margin:0;
         padding: 0;
@@ -80,11 +101,16 @@
 </style>
 
 <header>
-    <div class="netflix-stick">
-        <div class="thing">
+    <div>
+        <div class="netflix-stick">
+            <div class="thing">
+            </div>
         </div>
+        <span class="rest-logo">amed Entity Recognition</span>
     </div>
-    <span class="rest-logo">amed Entity Recognition</span>
+    <div>
+        <a href="https://ada.edu.az" class="header-item">About us</a>
+    </div>
 </header>
 
 {% block content %}

@@ -1,93 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}- Azerbaijan{% endblock %}
-
 {% block content %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
     <style>
-
 
     .first {
         display: flex;
         justify-content: space-between;
+        margin-top: 10px;
     }
 
     section {
+        color: #fff;
         width: 100%;
         padding: 30px 5%;
-        box-sizing: border-box;
-        background: #FCD96F;
-    }
-
-
-    .tags {
-        list-style: none;
-        margin: 0;
-        overflow: hidden;
-        padding: 0;
-        text-align: center;
-    }
-
-    .tags li {
-        float: left;
-    }
-
-    .tag {
-        background: #eee;
-        border-radius: 3px 0 0 3px;
-        color: #999;
-        display: inline-block;
-        height: 26px;
-        line-height: 26px;
-        padding: 0 20px 0 23px;
-        position: relative;
-        margin: 0 10px 10px 0;
-        text-decoration: none;
-        -webkit-transition: color 0.2s;
-    }
-
-
-
-    .tag::before {
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
-        content: '';
-        height: 6px;
-        left: 10px;
-        position: absolute;
-        width: 6px;
-        top: 10px;
-    }
-
-    .tag::after {
-        background: #fff;
-        border-bottom: 13px solid transparent;
-        border-left: 10px solid #eee;
-        border-top: 13px solid transparent;
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .tag:hover {
-        background-color: crimson;
-        color: white;
-    }
-
-    .tag:hover::after {
-        border-left-color: crimson;
-    }
-
-    .first{
         margin-top: 50px;
+        box-sizing: border-box;
+        background: #2d91e3;
     }
 
     #in {
         resize: none;
         width: 100%;
-        height: 100%;
+        height: 150px;
         box-sizing: border-box;
         padding: 15px;
         border: none;
@@ -100,41 +37,152 @@
 
     .form {
         width: 45%;
-        height: 150px;
+        height: 100%;
     }
 
     .filters {
         width: 45%;
-        display: flex;
-        justify-content: start;
-
     }
 
+    .n-header{
+        font-size: 26px;
+        line-height: 6vh;
+        margin:0;
+        padding:0;
+    }
+
+    .s-header{
+        font-size: 18px;
+        padding:0;
+        margin:0;
+        font-weight:600;
+    }
+    #toggle-filter{
+        color: #fff;
+        border: none;
+        background: transparent;
+        text-decoration: underline;
+        font-weight:600;
+        font-size: 15px;
+    }
+    #toggle-filter:hover{
+        background: linear-gradient(to right, #b1060f, #000);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-decoration: underline;
+    }
+
+    .tag {
+        font-size: 14px;
+        border: 1px solid grey;
+        padding: 3px 15px;
+        border-radius: 12px;
+        background: #ffffff;
+        color: black;
+        margin-top: 10px;
+        font-weight: 550;
+    }
     </style>
 
 
-    <section class="first">
+    <section>
 
-        <div class="form">
-            <textarea id="in" placeholder="Type your text here..."></textarea>
+        <h2 class="n-header">Named Entity Recognition for Azerbaijani Language</h2>
+        <div class="first">
+            <div class="form">
+                <textarea id="in" placeholder="Type your text here..."></textarea>
+
+                <div class="row pt-3">
+                    <div class="col-9">
+                        <div class="form-group">
+                            <label for="model">Model</label>
+                            <select class="form-control" id="model">
+                                <option>Custom model</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="model">&nbsp;</label>
+                            <button class="form-control btn btn-danger">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters">
+                <h2 class="s-header">Entity labels <button id="toggle-filter" data-isselected="false">(select all)</button></h2>
+                <div class="d-block">
+
+                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#a99dfb">PERSON</button>
+                    <button class="tag ml-2" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#ef60b4">DATE</button>
+                    <br>
+                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#a6e22d">LOCATION</button>
+                    <br>
+                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#fc0">ORGANIZATION</button>
+
+                </div>
+
+{#                <ul class="tags">#}
+{#                    <li><a class="tag">PERSON</a></li>#}
+{#                    <li><a class="tag">DATE</a></li>#}
+{#                    <br>#}
+{#                    <li><a class="tag">ORGANIZATION</a></li>#}
+{#                    <br>#}
+{#                    <li><a class="tag">LOCATION</a></li>#}
+{#                </ul>#}
+
+            </div>
         </div>
-
-        <div class="filters">
-
-            <ul class="tags">
-                <li><a class="tag">PERSON</a></li>
-                <li><a class="tag">DATE</a></li>
-                <br>
-                <li><a class="tag">ORGANIZATION</a></li>
-                <br>
-                <li><a class="tag">LOCATION</a></li>
-            </ul>
-
-
-        </div>
-
-
 
     </section>
+
+    <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+        var tags = document.querySelectorAll('.tag');
+        var toggle_filter = document.getElementById('toggle-filter');
+        tags.forEach(tag => {
+            tag.onclick = () => {
+                let is_selected = tag.dataset.isselected;
+                if (is_selected == "true") {
+                    tag.style.background = '#fff'
+                    tag.style.borderColor = 'grey';
+                    tag.style.color = '#000';
+                    tag.dataset.isselected = "false";
+                }else{
+                    tag.style.background = tag.dataset.bgsecondcolor;
+                    tag.style.borderColor = tag.dataset.secondcolor;
+                    tag.style.color = tag.dataset.secondcolor;
+                    tag.dataset.isselected = "true";
+                }
+            }
+        })
+
+        toggle_filter.onclick = () => {
+            let is_selected = toggle_filter.dataset.isselected;
+            if (is_selected == "true") {
+                toggle_filter.dataset.isselected = "false";
+                tags.forEach(tag => {
+                    tag.style.background = '#fff'
+                    tag.style.borderColor = 'grey';
+                    tag.style.color = '#000';
+                    tag.dataset.isselected = "false";
+                })
+            }else{
+                toggle_filter.dataset.isselected = "true";
+                tags.forEach(tag => {
+                    tag.style.background = tag.dataset.bgsecondcolor;
+                    tag.style.borderColor = tag.dataset.secondcolor;
+                    tag.style.color = tag.dataset.secondcolor;
+                    tag.dataset.isselected = "true";
+                });
+            }
+        }
+
+
+    })
+
+    </script>
 
 {% endblock %}
