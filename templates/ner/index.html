@@ -94,6 +94,10 @@
     }
 
     mark {
+        background: #fff;
+    }
+
+    .marked {
         padding: 0.3em 0.4em;
         margin: 0 0.25em;
         line-height: 1;
@@ -103,7 +107,7 @@
         font-size: 18px;
         margin-top: 10px;
     }
-    mark::after {
+    .marked::after {
         box-sizing: border-box;
         content: attr(data-tag);
         font-size: 0.55em;
@@ -146,18 +150,9 @@
             </div>
 
             <div class="filters">
-                <h2 class="s-header">Entity labels <button id="toggle-filter" data-isselected="false">(select all)</button></h2>
+                <h2 class="s-header">Entity labels <button id="toggle-filter" data-isselected="true">(select all)</button></h2>
                 <div id="tags" class="d-block">
-{#                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#a99dfb">PERSON</button>#}
-{#                    <button class="tag ml-2" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#ef60b4">DATE</button>#}
-{#                    <br>#}
-{#                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#a6e22d">LOCATION</button>#}
-{#                    <br>#}
-{#                    <button class="tag" data-isselected="false" data-secondcolor="#fff" data-bgsecondcolor="#fc0">ORGANIZATION</button>#}
-
                 </div>
-
-
             </div>
         </div>
 
@@ -165,7 +160,8 @@
 
     <section class="result-section">
         <mark data-tag="person">Lorem ipsum dolor</mark> sit amet, consectetur adipisicing elit.
-        <mark data-tag="organization">Dicta</mark> incidunt iure neque nesciunt <mark data-tag="date">perspiciatis</mark> qui quis reprehenderit velit! Aliquid beatae est porro saepe tempore temporibus! Explicabo illo nihil officiis ut.
+        <mark data-tag="organization">Dicta</mark> incidunt iure neque nesciunt <mark data-tag="organization">perspiciatis</mark> qui quis reprehenderit velit! Aliquid beatae est porro saepe tempore temporibus! Explicabo illo nihil officiis ut.
+        <mark data-tag="location">Baku</mark> is the capital of <mark data-tag="location">Azerbaijan</mark>. I started my university study <mark data-tag="date">in 2017</mark>
     </section>
     <script>
 
@@ -174,18 +170,22 @@
             "person": {
                 "bgsecondcolor": "#a99dfb",
                 "secondcolor": "#fff",
+                "display": true,
             },
             "date": {
                 "bgsecondcolor": "#ef60b4",
                 "secondcolor": "#fff",
+                "display": true,
             },
             "location": {
                 "bgsecondcolor": "#a6e22d",
                 "secondcolor": "#fff",
+                "display": true,
             },
             "organization": {
                 "bgsecondcolor": "#fc0",
                 "secondcolor": "#fff",
+                "display": true,
             }
         };
         generateTags(all_tags);
@@ -202,12 +202,15 @@
                     tag.style.borderColor = 'grey';
                     tag.style.color = '#000';
                     tag.dataset.isselected = "false";
+                    all_tags[tag.dataset.tag]["display"] = false
                 }else{
                     tag.style.background = tag.dataset.bgsecondcolor;
                     tag.style.borderColor = tag.dataset.secondcolor;
                     tag.style.color = tag.dataset.secondcolor;
                     tag.dataset.isselected = "true";
+                    all_tags[tag.dataset.tag]["display"] = true
                 }
+                updateMarkTags(all_tags);
             }
         })
 
@@ -220,6 +223,7 @@
                     tag.style.borderColor = 'grey';
                     tag.style.color = '#000';
                     tag.dataset.isselected = "false";
+                    all_tags[tag.dataset.tag]["display"] = false
                 })
             }else{
                 toggle_filter.dataset.isselected = "true";
@@ -228,8 +232,10 @@
                     tag.style.borderColor = tag.dataset.secondcolor;
                     tag.style.color = tag.dataset.secondcolor;
                     tag.dataset.isselected = "true";
+                    all_tags[tag.dataset.tag]["display"] = true
                 });
             }
+            updateMarkTags(all_tags);
         }
 
         function generateTags(all_tags){
@@ -239,10 +245,14 @@
             for (const [key, value] of Object.entries(all_tags)) {
                 let button = document.createElement('button');
                 button.classList.add('tag');
-                button.dataset.isselected = "false";
+                button.dataset.isselected = "true";
                 button.dataset.secondcolor = value["secondcolor"];
                 button.dataset.bgsecondcolor = value["bgsecondcolor"];
+                button.style.background = button.dataset.bgsecondcolor;
+                button.style.borderColor = button.dataset.secondcolor;
+                button.style.color = button.dataset.secondcolor;
                 button.innerText = key.toUpperCase();
+                button.dataset.tag = key;
                 tags.append(button);
                 result_len += key.length;
                 if (result_len/next_line >= 1) {
@@ -255,10 +265,16 @@
 
         function updateMarkTags(all_tags){
             let marks = document.querySelectorAll('mark');
-
+            console.log(all_tags);
             marks.forEach(mark => {
                 let mark_tag = mark.dataset.tag;
-                mark.style.background = all_tags[mark_tag]["bgsecondcolor"];
+                if (all_tags[mark_tag]["display"]) {
+                    mark.classList.add('marked');
+                    mark.style.background = all_tags[mark_tag]["bgsecondcolor"];
+                }else{
+                    mark.classList.remove('marked');
+                    mark.style.background = "#fff";
+                }
             })
         }
 
