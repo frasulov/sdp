@@ -1,0 +1,283 @@
+{% extends 'base_v2.html' %}
+{% load static %}
+{% block title %}- Azerbaijan{% endblock %}
+{% block content %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <style>
+
+    .first {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .first-section {
+        color: #fff;
+        width: 100%;
+        padding: 30px 5%;
+        margin-top: 30px;
+        box-sizing: border-box;
+        background: #2d91e3;
+    }
+
+
+    #in {
+        resize: none;
+        width: 100%;
+        height: 150px;
+        box-sizing: border-box;
+        padding: 15px;
+        border: none;
+    }
+
+    #in:focus {
+        outline: none;
+        border: 2px solid #b1060f;
+    }
+
+    .form {
+        width: 45%;
+        height: 100%;
+    }
+
+    .filters {
+        width: 45%;
+    }
+
+    .n-header{
+        font-size: 26px;
+        line-height: 6vh;
+        margin:0;
+        padding:0;
+    }
+
+    .s-header{
+        font-size: 18px;
+        padding:0;
+        margin:0;
+        font-weight:600;
+    }
+    #toggle-filter{
+        color: #fff;
+        border: none;
+        background: transparent;
+        text-decoration: underline;
+        font-weight:600;
+        font-size: 15px;
+    }
+    #toggle-filter:hover{
+        background: linear-gradient(to right, #b1060f, #000);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-decoration: underline;
+    }
+
+    .tag {
+        font-size: 14px;
+        border: 1px solid grey;
+        padding: 3px 15px;
+        border-radius: 12px;
+        background: #ffffff;
+        color: black;
+        margin-top: 10px;
+        font-weight: 550;
+        margin-right: 5px;
+    }
+
+    .result-section{
+        color: #000;
+        width: 100%;
+        padding: 30px 20%;
+        line-height: 30px;
+        font-size: 16px;
+    }
+
+    mark {
+        background: #fff;
+    }
+
+    .marked {
+        padding: 0.3em 0.4em;
+        margin: 0 0.25em;
+        line-height: 1;
+        display: inline-block;
+        border-radius: 0.25em;
+        box-sizing: border-box;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+    .marked::after {
+        box-sizing: border-box;
+        content: attr(data-tag);
+        font-size: 0.55em;
+        line-height: 1;
+        padding: 0.35em 0.35em;
+        border-radius: 0.35em;
+        text-transform: uppercase;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0 0.15rem 0.5rem;
+        background: #fff;
+        font-weight: bold;
+    }
+    </style>
+
+    <section class="first-section">
+        <h2 class="n-header">Named Entity Recognition for Azerbaijani Language</h2>
+        <div class="first">
+            <div class="form">
+                <textarea id="in" placeholder="Type your text here..."></textarea>
+
+                <div class="row pt-3">
+                    <div class="col-9">
+                        <div class="form-group">
+                            <label for="model">Model</label>
+                            <select class="form-control" id="model">
+                                <option>Custom model</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="model">&nbsp;</label>
+                            <button class="form-control btn btn-danger">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters">
+                <h2 class="s-header">Entity labels <button id="toggle-filter" data-isselected="true">(select all)</button></h2>
+                <div id="tags" class="d-block">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="result-section">
+        <mark data-tag="person">Lorem ipsum dolor</mark> sit amet, consectetur adipisicing elit.
+        <mark data-tag="organization">Dicta</mark> incidunt iure neque nesciunt <mark data-tag="organization">perspiciatis</mark> qui quis reprehenderit velit! Aliquid beatae est porro saepe tempore temporibus! Explicabo illo nihil officiis ut.
+        <mark data-tag="location">Baku</mark> is the capital of <mark data-tag="location">Azerbaijan</mark>. I started my university study <mark data-tag="date">in 2017</mark>
+    </section>
+    <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+        var all_tags = {
+            "person": {
+                "bgsecondcolor": "#a99dfb",
+                "secondcolor": "#fff",
+                "display": true,
+            },
+            "date": {
+                "bgsecondcolor": "#ef60b4",
+                "secondcolor": "#fff",
+                "display": true,
+            },
+            "location": {
+                "bgsecondcolor": "#a6e22d",
+                "secondcolor": "#fff",
+                "display": true,
+            },
+            "organization": {
+                "bgsecondcolor": "#fc0",
+                "secondcolor": "#fff",
+                "display": true,
+            }
+        };
+        generateTags(all_tags);
+        updateMarkTags(all_tags);
+
+
+        var tags = document.querySelectorAll('.tag');
+        var toggle_filter = document.getElementById('toggle-filter');
+        tags.forEach(tag => {
+            tag.onclick = () => {
+                let is_selected = tag.dataset.isselected;
+                if (is_selected == "true") {
+                    tag.style.background = '#fff'
+                    tag.style.borderColor = 'grey';
+                    tag.style.color = '#000';
+                    tag.dataset.isselected = "false";
+                    all_tags[tag.dataset.tag]["display"] = false
+                }else{
+                    tag.style.background = tag.dataset.bgsecondcolor;
+                    tag.style.borderColor = tag.dataset.secondcolor;
+                    tag.style.color = tag.dataset.secondcolor;
+                    tag.dataset.isselected = "true";
+                    all_tags[tag.dataset.tag]["display"] = true
+                }
+                updateMarkTags(all_tags);
+            }
+        })
+
+        toggle_filter.onclick = () => {
+            let is_selected = toggle_filter.dataset.isselected;
+            if (is_selected == "true") {
+                toggle_filter.dataset.isselected = "false";
+                tags.forEach(tag => {
+                    tag.style.background = '#fff'
+                    tag.style.borderColor = 'grey';
+                    tag.style.color = '#000';
+                    tag.dataset.isselected = "false";
+                    all_tags[tag.dataset.tag]["display"] = false
+                })
+            }else{
+                toggle_filter.dataset.isselected = "true";
+                tags.forEach(tag => {
+                    tag.style.background = tag.dataset.bgsecondcolor;
+                    tag.style.borderColor = tag.dataset.secondcolor;
+                    tag.style.color = tag.dataset.secondcolor;
+                    tag.dataset.isselected = "true";
+                    all_tags[tag.dataset.tag]["display"] = true
+                });
+            }
+            updateMarkTags(all_tags);
+        }
+
+        function generateTags(all_tags){
+            tags = document.getElementById('tags');
+            let result_len = 0;
+            let next_line = 8;
+            for (const [key, value] of Object.entries(all_tags)) {
+                let button = document.createElement('button');
+                button.classList.add('tag');
+                button.dataset.isselected = "true";
+                button.dataset.secondcolor = value["secondcolor"];
+                button.dataset.bgsecondcolor = value["bgsecondcolor"];
+                button.style.background = button.dataset.bgsecondcolor;
+                button.style.borderColor = button.dataset.secondcolor;
+                button.style.color = button.dataset.secondcolor;
+                button.innerText = key.toUpperCase();
+                button.dataset.tag = key;
+                tags.append(button);
+                result_len += key.length;
+                if (result_len/next_line >= 1) {
+                    result_len = 0;
+                    tags.append(document.createElement('br'));
+                }
+            }
+
+        }
+
+        function updateMarkTags(all_tags){
+            let marks = document.querySelectorAll('mark');
+            console.log(all_tags);
+            marks.forEach(mark => {
+                let mark_tag = mark.dataset.tag;
+                if (all_tags[mark_tag]["display"]) {
+                    mark.classList.add('marked');
+                    mark.style.background = all_tags[mark_tag]["bgsecondcolor"];
+                }else{
+                    mark.classList.remove('marked');
+                    mark.style.background = "#fff";
+                }
+            })
+        }
+
+    })
+
+    </script>
+
+{% endblock %}

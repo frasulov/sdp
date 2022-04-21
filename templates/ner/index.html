@@ -2,95 +2,90 @@
 {% load static %}
 {% block title %}- Azerbaijan{% endblock %}
 {% block content %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-
     <style>
 
-    .first {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
+    .h2-header {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 25px;
+        line-height: 30px;
+        color: #000000;
     }
 
-    .first-section {
-        color: #fff;
+    .left-header{
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 27px;
+    }
+
+    section {
         width: 100%;
-        padding: 30px 5%;
-        margin-top: 30px;
+        padding: 15px 5% 15px 5%;
+        margin-top: 50px;
+    }
+
+    .reset-all {
+        margin-left: 18px;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
+        text-transform: capitalize;
+        color: #8F8F8F;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tag{
         box-sizing: border-box;
-        background: #2d91e3;
+        border-radius: 4px;
+        padding: 10px 15px;
+        background: #FFFFFF;
+        border: 1px solid #D8D8D8;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #8F8F8F;
     }
 
+    .tag + .tag {
+        margin-left: 22px;
+    }
 
-    #in {
-        resize: none;
-        width: 100%;
-        height: 150px;
+    .tag-span {
+        margin-left: 10px;
+    }
+
+    #tags{
+        margin-bottom: 60px;
+    }
+
+    textarea{
+        background: #F4F4F4;
+        border: 1px solid #C8C8C8;
         box-sizing: border-box;
-        padding: 15px;
-        border: none;
+        border-radius: 5px;
+    }
+    .left{
+        width: 50%;
+        height: 100%;
     }
 
-    #in:focus {
-        outline: none;
-        border: 2px solid #b1060f;
-    }
-
-    .form {
+    .right{
         width: 45%;
         height: 100%;
     }
 
-    .filters {
-        width: 45%;
+    .top-header{
+        display: flex;
+        justify-content: space-between;
     }
 
-    .n-header{
-        font-size: 26px;
-        line-height: 6vh;
-        margin:0;
-        padding:0;
-    }
-
-    .s-header{
-        font-size: 18px;
-        padding:0;
-        margin:0;
-        font-weight:600;
-    }
-    #toggle-filter{
-        color: #fff;
-        border: none;
-        background: transparent;
-        text-decoration: underline;
-        font-weight:600;
-        font-size: 15px;
-    }
-    #toggle-filter:hover{
-        background: linear-gradient(to right, #b1060f, #000);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-decoration: underline;
-    }
-
-    .tag {
-        font-size: 14px;
-        border: 1px solid grey;
-        padding: 3px 15px;
-        border-radius: 12px;
-        background: #ffffff;
-        color: black;
-        margin-top: 10px;
-        font-weight: 550;
-        margin-right: 5px;
-    }
-
-    .result-section{
-        color: #000;
-        width: 100%;
-        padding: 30px 20%;
-        line-height: 30px;
-        font-size: 16px;
+    .result-section {
+        margin-top: 60px;
     }
 
     mark {
@@ -107,85 +102,167 @@
         font-size: 18px;
         margin-top: 10px;
     }
-    .marked::after {
+
+    .logo-span{
+        margin: 0 0.5rem 0 0;
         box-sizing: border-box;
-        content: attr(data-tag);
-        font-size: 0.55em;
-        line-height: 1;
-        padding: 0.35em 0.35em;
-        border-radius: 0.35em;
-        text-transform: uppercase;
         display: inline-block;
         vertical-align: middle;
-        margin: 0 0 0.15rem 0.5rem;
-        background: #fff;
-        font-weight: bold;
+    }
+    textarea{
+        width: 100%;
+        resize: none;
+        height: 242px;
+        background: #F4F4F4;
+        border: 1px solid #C8C8C8;
+        box-sizing: border-box;
+        border-radius: 5px;
+        padding: 20px;
+
+    }
+
+    .select {
+        background: #FFFFFF;
+        border: 1px solid #CBCBCB;
+        box-sizing: border-box;
+        border-radius: 4px 0px 0px 4px;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1em;
+        padding: 10px 15px;
+        height: 44px;
+        width: 80%;
+    }
+
+    .select:focus{
+        outline: none;
+    }
+
+    .search{
+        padding: 0 13px;
+        text-align: center;
+        background: #E80000;
+        border: 1px solid #E80000;
+        box-sizing: border-box;
+        border-radius: 0px 4px 4px 0px;
+    }
+
+    #toggle-filter{
+        border: none;
+        background: transparent;
+        text-transform: capitalize;
+        color: #8F8F8F;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
     }
     </style>
 
+    <section class="top-header">
 
-    <section class="first-section">
-
-        <h2 class="n-header">Named Entity Recognition for Azerbaijani Language</h2>
-        <div class="first">
-            <div class="form">
-                <textarea id="in" placeholder="Type your text here..."></textarea>
-
-                <div class="row pt-3">
-                    <div class="col-9">
-                        <div class="form-group">
-                            <label for="model">Model</label>
-                            <select class="form-control" id="model">
-                                <option>Custom model</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="model">&nbsp;</label>
-                            <button class="form-control btn btn-danger">Search</button>
-                        </div>
-                    </div>
-                </div>
+        <div class="left">
+            <div class="left-header">
+                <h2 class="h2-header">Entity labels</h2>
+                <span class="reset-all">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="#FBFBFB"/>
+                    <path d="M5.078 7.98658C6.05072 6.3078 7.60039 5.03973 9.43847 4.41849C11.2766 3.79725 13.2778 3.86517 15.0695 4.60962C16.8612 5.35407 18.3214 6.7243 19.178 8.46518C20.0346 10.2061 20.2294 12.1989 19.7261 14.0727C19.2227 15.9465 18.0555 17.5736 16.4419 18.6508C14.8282 19.7281 12.878 20.1822 10.9544 19.9287C9.03081 19.6751 7.26493 18.7311 5.98557 17.2724C4.70621 15.8137 4.00055 13.9398 4 11.9996" stroke="#E80000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8.99999 7.9995H5V3.99951" stroke="#E80000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span style="margin-left: 10px"><button id="toggle-filter" data-isselected="true">reset all</button></span>
+                </span>
             </div>
 
-            <div class="filters">
-                <h2 class="s-header">Entity labels <button id="toggle-filter" data-isselected="true">(select all)</button></h2>
-                <div id="tags" class="d-block">
-                </div>
+            <div id="tags" class="d-block">
+
+
+            </div>
+
+            <div>
+                <textarea placeholder="Type your text..."></textarea>
             </div>
         </div>
 
+    <div class="right">
+        <h2 class="h2-header">Model</h2>
+        <div class="d-flex" style="margin-top: 36px;">
+
+            <select class="select">
+                <option value="">Named Entity Model for Azerbaijani Language</option>
+            </select>
+            <button class="search">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="#FAFAFA"/>
+                </svg>
+
+            </button>
+
+        </div>
+
+
+        <div class="result-section">
+            <mark data-tag="person" data-text="Lorem ipsum dolor"></mark> sit amet, consectetur adipisicing elit.
+            <mark data-tag="organization" data-text="Dicta"></mark> incidunt iure neque nesciunt <mark data-tag="organization" data-text="perspiciatis"></mark> qui quis reprehenderit velit! Aliquid beatae est porro saepe tempore temporibus! Explicabo illo nihil officiis ut.
+            <mark data-tag="location" data-text="Baku"></mark> is the capital of <mark data-tag="location" data-text="Azerbaijan"></mark>. I started my university study <mark data-tag="date" data-text="in 2017"></mark>
+        </div>
+
+    </div>
+
+
+
     </section>
 
-    <section class="result-section">
-        <mark data-tag="person">Lorem ipsum dolor</mark> sit amet, consectetur adipisicing elit.
-        <mark data-tag="organization">Dicta</mark> incidunt iure neque nesciunt <mark data-tag="organization">perspiciatis</mark> qui quis reprehenderit velit! Aliquid beatae est porro saepe tempore temporibus! Explicabo illo nihil officiis ut.
-        <mark data-tag="location">Baku</mark> is the capital of <mark data-tag="location">Azerbaijan</mark>. I started my university study <mark data-tag="date">in 2017</mark>
-    </section>
+
+
     <script>
 
     document.addEventListener("DOMContentLoaded", () => {
         var all_tags = {
             "person": {
-                "bgsecondcolor": "#a99dfb",
-                "secondcolor": "#fff",
+                "bgsecondcolor": "#FFE8D3",
+                "bordercolor": "#FF7A00",
                 "display": true,
+                "logo": `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="#FCFCFC"/>
+                        <path d="M12 11C12.7911 11 13.5645 10.7654 14.2223 10.3259C14.8801 9.88635 15.3928 9.26164 15.6955 8.53074C15.9983 7.79983 16.0775 6.99556 15.9231 6.21964C15.7688 5.44372 15.3878 4.73098 14.8284 4.17157C14.269 3.61216 13.5563 3.2312 12.7804 3.07686C12.0044 2.92252 11.2002 3.00173 10.4693 3.30448C9.73836 3.60723 9.11365 4.11992 8.67412 4.77772C8.2346 5.43552 8 6.20888 8 7C8 8.06087 8.42143 9.07828 9.17157 9.82843C9.92172 10.5786 10.9391 11 12 11ZM18 21C18.2652 21 18.5196 20.8946 18.7071 20.7071C18.8946 20.5196 19 20.2652 19 20C19 18.1435 18.2625 16.363 16.9497 15.0503C15.637 13.7375 13.8565 13 12 13C10.1435 13 8.36301 13.7375 7.05025 15.0503C5.7375 16.363 5 18.1435 5 20C5 20.2652 5.10536 20.5196 5.29289 20.7071C5.48043 20.8946 5.73478 21 6 21H18Z" fill="#FF7A00"/>
+                        </svg>`
             },
             "date": {
-                "bgsecondcolor": "#ef60b4",
-                "secondcolor": "#fff",
+                "bgsecondcolor": "#D7FFE7",
+                "bordercolor": "#00E45B",
                 "display": true,
+                "logo": `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="#FCFCFC"/>
+<path d="M9.48148 11.325H7.65432V13.175H9.48148V11.325ZM13.1358 11.325H11.3086V13.175H13.1358V11.325ZM16.7901 11.325H14.963V13.175H16.7901V11.325ZM18.6173 4.85H17.7037V3H15.8765V4.85H8.5679V3H6.74074V4.85H5.82716C4.81309 4.85 4.00914 5.6825 4.00914 6.7L4 19.65C4 20.6675 4.81309 21.5 5.82716 21.5H18.6173C19.6222 21.5 20.4444 20.6675 20.4444 19.65V6.7C20.4444 5.6825 19.6222 4.85 18.6173 4.85ZM18.6173 19.65H5.82716V9.475H18.6173V19.65Z" fill="#00E45B"/>
+</svg>
+`
             },
             "location": {
-                "bgsecondcolor": "#a6e22d",
-                "secondcolor": "#fff",
+                "bgsecondcolor": "#DBF2FF",
+                "bordercolor": "#00A3FF",
                 "display": true,
+                "logo": `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="#FCFCFC"/>
+<path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="#00A3FF"/>
+</svg>`
             },
             "organization": {
-                "bgsecondcolor": "#fc0",
-                "secondcolor": "#fff",
+                "bgsecondcolor": "#F0D7FF",
+                "bordercolor": "#9E00FF",
                 "display": true,
+                "logo": `
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" fill="#FCFCFC"/>
+<path d="M10 16V15H3.01L3 19C3 20.11 3.89 21 5 21H19C20.11 21 21 20.11 21 19V15H14V16H10ZM20 7H15.99V5L13.99 3H9.99L7.99 5V7H4C2.9 7 2 7.9 2 9V12C2 13.11 2.89 14 4 14H10V12H14V14H20C21.1 14 22 13.1 22 12V9C22 7.9 21.1 7 20 7ZM14 7H10V5H14V7Z" fill="#9E00FF"/>
+</svg>
+`
             }
         };
         generateTags(all_tags);
@@ -199,14 +276,13 @@
                 let is_selected = tag.dataset.isselected;
                 if (is_selected == "true") {
                     tag.style.background = '#fff'
-                    tag.style.borderColor = 'grey';
-                    tag.style.color = '#000';
+                    tag.style.borderColor = '#D8D8D8';
+                    tag.style.color = '#8F8F8F';
                     tag.dataset.isselected = "false";
                     all_tags[tag.dataset.tag]["display"] = false
                 }else{
                     tag.style.background = tag.dataset.bgsecondcolor;
-                    tag.style.borderColor = tag.dataset.secondcolor;
-                    tag.style.color = tag.dataset.secondcolor;
+                    tag.style.borderColor = tag.dataset.bordercolor;
                     tag.dataset.isselected = "true";
                     all_tags[tag.dataset.tag]["display"] = true
                 }
@@ -220,8 +296,8 @@
                 toggle_filter.dataset.isselected = "false";
                 tags.forEach(tag => {
                     tag.style.background = '#fff'
-                    tag.style.borderColor = 'grey';
-                    tag.style.color = '#000';
+                    tag.style.borderColor = '#D8D8D8';
+                    tag.style.color = '#8F8F8F';
                     tag.dataset.isselected = "false";
                     all_tags[tag.dataset.tag]["display"] = false
                 })
@@ -229,8 +305,7 @@
                 toggle_filter.dataset.isselected = "true";
                 tags.forEach(tag => {
                     tag.style.background = tag.dataset.bgsecondcolor;
-                    tag.style.borderColor = tag.dataset.secondcolor;
-                    tag.style.color = tag.dataset.secondcolor;
+                    tag.style.borderColor = tag.dataset.bordercolor;
                     tag.dataset.isselected = "true";
                     all_tags[tag.dataset.tag]["display"] = true
                 });
@@ -240,25 +315,18 @@
 
         function generateTags(all_tags){
             tags = document.getElementById('tags');
-            let result_len = 0;
-            let next_line = 8;
             for (const [key, value] of Object.entries(all_tags)) {
                 let button = document.createElement('button');
                 button.classList.add('tag');
                 button.dataset.isselected = "true";
-                button.dataset.secondcolor = value["secondcolor"];
+                button.dataset.bordercolor = value["bordercolor"];
                 button.dataset.bgsecondcolor = value["bgsecondcolor"];
                 button.style.background = button.dataset.bgsecondcolor;
-                button.style.borderColor = button.dataset.secondcolor;
-                button.style.color = button.dataset.secondcolor;
-                button.innerText = key.toUpperCase();
+                button.style.borderColor = button.dataset.bordercolor;
+                {#button.innerText = key.toUpperCase();#}
+                button.innerHTML = `${value["logo"]} <span class="tag-span">${key.toUpperCase()}</span>`
                 button.dataset.tag = key;
                 tags.append(button);
-                result_len += key.length;
-                if (result_len/next_line >= 1) {
-                    result_len = 0;
-                    tags.append(document.createElement('br'));
-                }
             }
 
         }
@@ -270,9 +338,11 @@
                 let mark_tag = mark.dataset.tag;
                 if (all_tags[mark_tag]["display"]) {
                     mark.classList.add('marked');
+                    mark.innerHTML = `<span class="logo-span">${all_tags[mark_tag]["logo"]}</span> ${mark.dataset.text}`
                     mark.style.background = all_tags[mark_tag]["bgsecondcolor"];
                 }else{
                     mark.classList.remove('marked');
+                    mark.innerHTML = mark.dataset.text
                     mark.style.background = "#fff";
                 }
             })
