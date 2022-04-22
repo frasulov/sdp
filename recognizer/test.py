@@ -2,6 +2,7 @@ import os
 
 import torch
 # from sdp.settings import BASE_DIR
+from sdp.settings import BASE_DIR
 from .config import UNIQUE_TAGS
 from .utils import predict_sentence, load_pickle
 
@@ -16,13 +17,13 @@ def main(s):
     device = "cpu"
 
     # model = torch.load(os.path.join(BASE_DIR, 'ner/testing/model.pth'), map_location=lambda storage, loc: storage)
-    model = torch.load("/Users/feqanrasulov/Desktop/sdp/recognizer/model.pth", map_location=lambda storage, loc: storage)
+    model = torch.load(os.path.join(BASE_DIR, 'recognizer/model.pth'), map_location=lambda storage, loc: storage)
     model = model["model"]
     model.eval()
     print(model)
     model.crf.device = device
     model.device = device
-    w2i = load_pickle("/Users/feqanrasulov/Desktop/sdp/recognizer/word2index.pkl")
+    w2i = load_pickle(os.path.join(BASE_DIR, 'recognizer/word2index.pkl'))
     sentence = (
         s
     )
