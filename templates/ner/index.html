@@ -160,6 +160,66 @@
         font-size: 14px;
         line-height: 17px;
     }
+    .loading-container {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        vertical-align: middle;
+        min-height: 242px;
+        background: #F9EDE6;
+    }
+    .loader {
+        margin: 0 auto;
+        text-align: center;
+        width: 100%;
+        min-height: 100%;
+        display: table-cell;
+        vertical-align: middle;
+        opacity: 0.4;
+    }
+    .loader * {
+        animation-play-state: paused;
+    }
+    .loader:hover {
+        opacity: 1;
+    }
+    .loader:hover * {
+        animation-play-state: running;
+    }
+
+    .loading-bars {
+        text-align: center;
+    }
+    .loading-bars .bar {
+        height: 20px;
+        width: 10px;
+        background: #BE4603;
+        display: inline-block;
+        animation: pulse 1.2s infinite ease-out;
+    }
+    .loading-bars .bar:nth-of-type(0n+1) {
+        animation-delay: 0s;
+    }
+    .loading-bars .bar:nth-of-type(0n+2) {
+        animation-delay: 0.2s;
+    }
+    .loading-bars .bar:nth-of-type(0n+3) {
+        animation-delay: 0.4s;
+    }
+    .loading-bars .bar:nth-of-type(0n+4) {
+        animation-delay: 0.6s;
+    }
+    .loading-bars .bar:nth-of-type(0n+5) {
+        animation-delay: 0.8s;
+    }
+    @keyframes pulse {
+        0%, 75% {
+            transform: scale(1, 1);
+        }
+        25% {
+            transform: scale(1, 3);
+        }
+    }
     </style>
 
     <section class="top-header">
@@ -183,7 +243,7 @@
             </div>
 
             <div>
-                <textarea placeholder="Type your text..."></textarea>
+                <textarea id="input" placeholder="Type your text..."></textarea>
             </div>
         </div>
 
@@ -194,7 +254,7 @@
             <select class="select">
                 <option value="">Named Entity Model for Azerbaijani Language</option>
             </select>
-            <button class="search">
+            <button class="search" id="search">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="#FAFAFA"/>
                 </svg>
@@ -205,9 +265,20 @@
 
 
         <div class="result-section">
-            <mark data-tag="person" data-text="Lorem ipsum dolor"></mark> sit amet, consectetur adipisicing elit.
-            <mark data-tag="organization" data-text="Dicta"></mark> incidunt iure neque nesciunt <mark data-tag="organization" data-text="perspiciatis"></mark> qui quis reprehenderit velit! Aliquid beatae est porro saepe tempore temporibus! Explicabo illo nihil officiis ut.
-            <mark data-tag="location" data-text="Baku"></mark> is the capital of <mark data-tag="location" data-text="Azerbaijan"></mark>. I started my university study <mark data-tag="date" data-text="in 2017"></mark>
+            <div id="output">
+
+            </div>
+            <div class="loading-container d-none" id="loader">
+                <div class="loader">
+                    <div class="loading-bars">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -346,6 +417,39 @@
                     mark.style.background = "#fff";
                 }
             })
+        }
+
+
+        document.getElementById('search').onclick = () => {
+            output = document.getElementById('output');
+            loader = document.querySelector('#loader');
+            console.log(loader)
+            text = document.getElementById('input').value;
+            if (text === 0) {
+                alert("Please, insert a text!")
+            }else {
+                loader.classList.remove('d-none');
+                output.innerHTML = ''
+                fetch("/api/v1/ner", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        text: text,
+                    })
+                }).then(result => {
+                    loader.classList.add('d-none');
+                    if (result.status === 201) {
+                        result.text().then(resp => {
+                            obj = JSON.parse(resp);
+                            val = obj["text"]
+                            output.innerHTML = val
+                            updateMarkTags(all_tags);
+                        })
+                    }else{
+                        alert("Error Response: ", result)
+                    }
+                });
+            }
         }
 
     })
